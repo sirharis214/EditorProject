@@ -20,9 +20,30 @@
 	  <div class="container">
       <h1 class="mt-5">File Output Page</h1>
 			<center>
-				{% if file_output %}
+			<!--	{% if file_output %}
 					<p style="color:blue;">{{file_output}}</p>
-				{% endif %}
+				{% endif %} 
+      -->
+      <!-- file_output  is a dicitionary of lists 
+           each list has [lineNum, {show_name_value:show_name_validation_result, etc...}]
+              showname/showID/showType/showDate/Showtimecodes
+      <p>{{list}}</p>
+      --> 
+      <div class="d-flex flex-wrap bg-info justify-content-evenly p-2">
+        {% if file_output %}
+          {% for list in file_output.items() %}
+            <div class="bg-light p-2">
+              <h4>{{list[0]}}</h4>
+              {% for category,categoryValue in list[1].items()%}
+                <d1>
+                  <dt>{{category}}</dt>
+                  <dd>{{categoryValue}}</dd>
+                </d1>
+              {% endfor%}
+            </div>
+          {% endfor %}
+        {% endif %}
+      </div>
 			</center>	  
 		  </div>
 	  </main>

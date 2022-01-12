@@ -43,3 +43,6 @@ def home_page():
 @app.route("/file_output/<filename>")
 def file_output_page(filename):
     return render_template('file_output.html', file_output = editor.extractFile(app.config["FILE_UPLOADS"], filename))
+
+if __name__ == "__main__":
+    app.run()
