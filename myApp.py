@@ -2,12 +2,12 @@ from flask import Flask, render_template, request, redirect, url_for
 import os, sys
 app = Flask(__name__)
 
-app.config["FILE_UPLOADS"] = "/home/haris/Project/uploads"
+app.config["FILE_UPLOADS"] = "/var/www/html/FlaskDir/uploads"
 app.config["ALLOWED_FILE_EXTENSIONS"] = ["TXT"]
 # import the path of the scripts 
-app.config["FILE_SCRIPTS"] = "/home/haris/Project/scripts"
+app.config["FILE_SCRIPTS"] = "/var/www/html/FlaskDir/scripts"
 sys.path.insert(0,app.config["FILE_SCRIPTS"])
-import editor
+import editor # the python script that makes all the magic happen
 
 def allowedFile(filename):
     if not "." in filename:
@@ -24,6 +24,9 @@ def allowedFile(filename):
 def home_page():
     if request.method == "POST":
         if request.files:
+            # first delete any .txt files that exist in uploads
+            editor.clearUploads(app.config["FILE_UPLOADS"])
+            # no continue to work on the file user is currently uploading
             uploaded_file = request.files["file"]
             # if the file does not have a name
             if uploaded_file.filename == "":
@@ -39,10 +42,14 @@ def home_page():
             return redirect(url_for("file_output_page", filename = uploaded_file.filename))
     return render_template('home.html')
 
-#@app.route("/file_output", methods=["GET", "POST"])
 @app.route("/file_output/<filename>")
-def file_output_page(filename):
+def file_output_page(filename): 
     return render_template('file_output.html', file_output = editor.extractFile(app.config["FILE_UPLOADS"], filename))
+    
+
+@app.route("/file_output")
+def empty_file_output_page():
+    return render_template('file_output.html')
 
 if __name__ == "__main__":
     app.run()

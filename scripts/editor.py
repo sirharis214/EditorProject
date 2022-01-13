@@ -1,6 +1,10 @@
 from readMarker import *   # custom moduel that reads the marker file line by line
 import makeCategories      # custom moduel to split each line into categories
 import approveCategories   # custom moduel to validate the category entries
+import clearUploadsDir     # custom moduel to clean out uplaods folder before user uploads new .txt file
+
+def clearUploads(uploadsPath):
+	clearUploadsDir.clearUploadsFolder(uploadsPath)
 
 def extractFile(uploadsPath, filename):
 	Lines = getLines(uploadsPath, filename)
