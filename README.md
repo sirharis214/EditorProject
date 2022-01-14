@@ -111,9 +111,19 @@ with the contents of our actual flask project in ~/EditorProject__\
   - This is important so our python script can read the txt file the user uploads
 * ```sudo systemctl restart apache2```
 
+__When a new update is available in git.__\
+* ```cd ~/EditorProject ```
+* ```git checkout -b flask ```
+  - Creating local branch flask for first time git commit.
+* ```git add * ```
+* ``` git commit -m "your commit message"```
+* ```git pull origin main```
+* ```sudo cp -r ./* /var/www/html/FlaskDir/```
+* ```sudo systemctl restart apache2```
 
-
-
-
-
-
+__Notes for local Ubuntu VM, when working on flask app.__\
+To start local dev flask app.
+* ```cd ~/Project/```
+* ```export FLASK_APP=myApp.py```
+* ```export FLASK_ENV=development```
+* ```flask run```
